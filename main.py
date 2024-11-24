@@ -12,6 +12,7 @@ from typing import Optional, Tuple
 from functools import wraps
 from glob import glob
 import logging
+os.environ["COQUI_TOS_AGREED"] = "1"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
