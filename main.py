@@ -117,8 +117,6 @@ class TTSManager:
 
         return most_similar
 
-
-
     def _load_speaker(self, speaker_path: str) -> Tuple[np.ndarray, int]:
         """Load speaker audio file and return audio data and sample rate"""
         audio, sample_rate = sf.read(speaker_path)
@@ -207,9 +205,14 @@ def generate_speech():
         }), 500
 
 
-if __name__ == '__main__':
-    try:
+@app.route('/health')
+def health_check():
+    return {'status': 'ok'}, 200
 
+
+def init_app():
+    global BEARER_TOKEN
+    try:
         if not os.path.exists(SOURCE_DIR_PATH):
             os.makedirs(SOURCE_DIR_PATH)
         if not os.path.exists(OUTPUT_DIR_PATH):
@@ -227,9 +230,14 @@ if __name__ == '__main__':
         sync_bucket_to_local(gcloud_service_account, SOURCE_DIR_PATH, 'source_wav/',
                              delimiter='/')
 
+        return True
     except Exception as e:
-        # Handle unexpected cases and panic
         print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
+        return False
 
+
+# Make sure your Flask app is initialized before any routes
+init_app()
+
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9000)
