@@ -11,6 +11,15 @@ from gcloud_storage_manager import sync_bucket_to_local, upload_file_to_bucket, 
 from typing import Optional, Tuple
 from functools import wraps
 from glob import glob
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# At the top of your main.py, right after imports:
+logger.info("Starting application initialization...")
+
+
 
 app = Flask(__name__)
 
@@ -211,6 +220,8 @@ def health_check():
 
 
 def init_app():
+    # Inside init_app():
+    logger.info("Running init_app...")
     global BEARER_TOKEN
     try:
         if not os.path.exists(SOURCE_DIR_PATH):
@@ -238,6 +249,7 @@ def init_app():
 
 # Make sure your Flask app is initialized before any routes
 init_app()
+logger.info("init_app completed successfully")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=9000)
