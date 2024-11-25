@@ -27,7 +27,7 @@ OUTPUT_DIR_PATH = "output_file"
 CREDENTIAL_DIR_PATH = "credential"
 BEARER_TOKEN = ""
 
-GCLOUD_SERVICE_ACCOUNT = 'russiannewbot23-6bb070d3edee.json'
+GCLOUD_SERVICE_ACCOUNT = ''
 
 
 # Authentication decorator
@@ -213,6 +213,7 @@ def init_app():
     # Inside init_app():
     logger.info("Running init_app...")
     global BEARER_TOKEN
+    global GCLOUD_SERVICE_ACCOUNT
     try:
         if not os.path.exists(SOURCE_DIR_PATH):
             os.makedirs(SOURCE_DIR_PATH)
@@ -227,6 +228,8 @@ def init_app():
                 raise ValueError("BEARER_TOKEN environment variable is not set")
 
         gcloud_service_account = get_gcloud_json_file(CREDENTIAL_DIR_PATH)
+
+        GCLOUD_SERVICE_ACCOUNT = gcloud_service_account
 
         #print("gcloud_service_account", gcloud_service_account)
 
