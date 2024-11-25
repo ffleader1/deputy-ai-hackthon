@@ -1,7 +1,5 @@
 import os
 import sys
-import soundfile as sf
-import numpy as np
 from flask import Flask, request, jsonify
 import torch
 from TTS.api import TTS
@@ -126,13 +124,6 @@ class TTSManager:
         most_similar = min(distances, key=lambda x: x[1])[0]
 
         return most_similar
-
-    def _load_speaker(self, speaker_path: str) -> Tuple[np.ndarray, int]:
-        """Load speaker audio file and return audio data and sample rate"""
-        audio, sample_rate = sf.read(speaker_path)
-        if len(audio.shape) > 1:
-            audio = audio[:, 0]  # Convert stereo to mono if necessary
-        return audio, sample_rate
 
     def generate_speech(self,
                         text: str,
