@@ -163,11 +163,6 @@ class TTSManager:
     #         pass
 
 
-# Initialize TTS manager globally
-tts_manager = TTSManager(
-    model_name="tts_models/multilingual/multi-dataset/xtts_v2",
-    speakers_dir=SOURCE_DIR_PATH  # Directory containing speaker MP3 files
-)
 
 
 @app.route('/generate-speech', methods=['POST'])
@@ -193,6 +188,9 @@ def generate_speech():
         )
 
         fs_upload_data = upload_file_to_bucket(output_path, GCLOUD_SERVICE_ACCOUNT)
+        if os.path.exists(output_path):
+            os.remove(output_path)
+
         return jsonify({
             'status': 'success',
             'output_file_url': fs_upload_data,
@@ -242,6 +240,12 @@ def init_app():
 # Make sure your Flask app is initialized before any routes
 init_app()
 logger.info("init_app completed successfully")
+
+# Initialize TTS manager globally
+tts_manager = TTSManager(
+    model_name="tts_models/multilingual/multi-dataset/xtts_v2",
+    speakers_dir=SOURCE_DIR_PATH  # Directory containing speaker MP3 files
+)
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=9000)
