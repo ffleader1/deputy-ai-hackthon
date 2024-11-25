@@ -228,6 +228,8 @@ def init_app():
 
         gcloud_service_account = get_gcloud_json_file(CREDENTIAL_DIR_PATH)
 
+        #print("gcloud_service_account", gcloud_service_account)
+
         sync_bucket_to_local(gcloud_service_account, SOURCE_DIR_PATH, 'source_wav/',
                              delimiter='/')
 
