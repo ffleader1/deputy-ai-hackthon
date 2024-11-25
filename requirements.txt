@@ -133,7 +133,6 @@ tokenizers==0.20.3
 torch==2.5.1
 torchaudio==2.5.1
 tqdm==4.67.0
-trainer==0.0.36
 transformers==4.46.2
 TTS==0.22.0
 typeguard==4.4.1
