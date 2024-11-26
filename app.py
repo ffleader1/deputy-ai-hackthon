@@ -110,6 +110,8 @@ class TTSManager:
         return previous_row[-1]
 
     def find_most_similar_speaker(self, query):
+        print("The input name: ", query)
+        print("The speaker list: ", self.speaker_list)
         if not hasattr(self, 'speaker_list') or not self.speaker_list:
             raise ValueError("Speaker list not initialized")
 
@@ -121,7 +123,7 @@ class TTSManager:
         # Find the most similar name using Levenshtein distance
         distances = [(name, self._levenshtein_distance(query, name.lower()))
                      for name in self.speaker_list]
-
+        print("The distance: ", distances)
         # Sort by distance (lower is more similar) and get the most similar name
         most_similar = min(distances, key=lambda x: x[1])[0]
 
