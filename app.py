@@ -147,6 +147,8 @@ class TTSManager:
         else:
             speaker_path = self.default_speaker_path
 
+        print("The speaker is: ", speaker_path)
+
         # Generate speech (WAV)
         self.model.tts_to_file(
             text=text,
