@@ -110,8 +110,6 @@ class TTSManager:
         return previous_row[-1]
 
     def find_most_similar_speaker(self, query):
-        print("The input name: ", query)
-        print("The speaker list: ", self.speaker_list)
         if not hasattr(self, 'speaker_list') or not self.speaker_list:
             raise ValueError("Speaker list not initialized")
 
@@ -123,10 +121,10 @@ class TTSManager:
         # Find the most similar name using Levenshtein distance
         distances = [(name, self._levenshtein_distance(query, name.lower()))
                      for name in self.speaker_list]
-        print("The distance: ", distances)
+
         # Sort by distance (lower is more similar) and get the most similar name
         most_similar = min(distances, key=lambda x: x[1])[0]
-        print("The most similar: ", most_similar)
+
         return most_similar
 
     def generate_speech(self,
@@ -144,13 +142,11 @@ class TTSManager:
         if speaker_name is not None:
             most_similar = self.find_most_similar_speaker(speaker_name) + ".mp3"
             speaker_path = os.path.join(SOURCE_DIR_PATH, most_similar)
-            print("The speaker here is: ", speaker_path)
-            if os.path.exists(speaker_path):
+            if not os.path.exists(speaker_path):
                 speaker_path = self.default_speaker_path
         else:
             speaker_path = self.default_speaker_path
 
-        print("The speaker is: ", speaker_path)
 
         # Generate speech (WAV)
         self.model.tts_to_file(
