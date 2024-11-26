@@ -116,6 +116,8 @@ class TTSManager:
         # Convert query to lowercase and remove extension if present
         query = os.path.splitext(query.lower())[0]
 
+        query = query.replace(" ", "").replace("_", "")
+
         # Find the most similar name using Levenshtein distance
         distances = [(name, self._levenshtein_distance(query, name.lower()))
                      for name in self.speaker_list]
