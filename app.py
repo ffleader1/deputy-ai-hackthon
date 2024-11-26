@@ -126,7 +126,7 @@ class TTSManager:
         print("The distance: ", distances)
         # Sort by distance (lower is more similar) and get the most similar name
         most_similar = min(distances, key=lambda x: x[1])[0]
-
+        print("The most similar: ", most_similar)
         return most_similar
 
     def generate_speech(self,
@@ -144,6 +144,7 @@ class TTSManager:
         if speaker_name is not None:
             most_similar = self.find_most_similar_speaker(speaker_name) + ".mp3"
             speaker_path = os.path.join(SOURCE_DIR_PATH, most_similar)
+            print("The speaker here is: ", speaker_path)
             if os.path.exists(speaker_path):
                 speaker_path = self.default_speaker_path
         else:
